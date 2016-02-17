@@ -118,6 +118,8 @@ void Car::draw() {
   p3d::modelviewMatrix.push();
   p3d::modelviewMatrix.translate(4., -1. , 0.);
   p3d::modelviewMatrix.rotate(90., 0., 1., 0.);
+  p3d::modelviewMatrix.rotate(_steering, 0., 1., 0.);
+  p3d::modelviewMatrix.rotate(_rotateWheel, 1., 0., 0.);
   p3d::modelviewMatrix.scale(0.5, 0.5, 0.5);
   drawAxle();
   p3d::modelviewMatrix.pop();
@@ -125,6 +127,7 @@ void Car::draw() {
   p3d::modelviewMatrix.push();
   p3d::modelviewMatrix.translate(-1., -1. ,0.);
   p3d::modelviewMatrix.rotate(90., 0., 1., 0.);
+  p3d::modelviewMatrix.rotate(_rotateWheel, 1., 0., 0.);
   p3d::modelviewMatrix.scale(0.5, 0.5, 0.5);
   drawAxle();
   p3d::modelviewMatrix.pop();
