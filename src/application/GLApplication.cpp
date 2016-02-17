@@ -171,16 +171,20 @@ void GLApplication::updateCamera() {
   switch (_cameraMode) {
     case Camera_Car_Setup:
       if (mouseLeft()) {
-        _camera.lookAt(_car.position());
-        Vector3 t=_camera.pointTo(Coordinate_Local,_car.position());
-        Vector3 vertical=_camera.directionTo(Coordinate_Local,Vector3(0,1,0));
-        _camera.translate(t,Coordinate_Local);
-        _camera.rotate(-deltaMouseX(),vertical,Coordinate_Local);
-        _camera.rotate(deltaMouseY(),Vector3(1,0,0),Coordinate_Local);
-        _camera.translate(-t,Coordinate_Local);
+        _cameraStop.lookAt(_car.position());
+        Vector3 t=_cameraStop.pointTo(Coordinate_Local,_car.position());
+        Vector3 vertical=_cameraStop.directionTo(Coordinate_Local,Vector3(0,1,0));
+        _cameraStop.translate(t,Coordinate_Local);
+        _cameraStop.rotate(-deltaMouseX(),vertical,Coordinate_Local);
+        _cameraStop.rotate(deltaMouseY(),Vector3(1,0,0),Coordinate_Local);
+        _cameraStop.translate(-t,Coordinate_Local);
       }
       break;
     case Camera_Follow_Car: {
+      //Q16
+      _cameraStop.position(_car.position()+ _car.orientation() * Vector3(-9,4,0));
+      _cameraStop.orientation(_car.orientation());
+      _cameraStop.rotate(-90,Vector3(0,1,0));
 
       }
       break;
@@ -191,15 +195,20 @@ void GLApplication::updateCamera() {
         _camera.orientation(180,Vector3(0,1,0));
       */
 
-      _camera.position(_airplane.position()+ _airplane.orientation() * Vector3(0,1,-3));
-      _camera.orientation(_airplane.orientation());
-      _camera.rotate(180,Vector3(0,1,0));
+      //Q15
+      _cameraStop.position(_airplane.position()+ _airplane.orientation() * Vector3(0,1,-3));
+      _cameraStop.orientation(_airplane.orientation());
+      _cameraStop.rotate(180,Vector3(0,1,0));
 
       }
       break;
     default:break;
 
   }
+
+  //Q17
+  _camera.position(_cameraStart.position() * ( 1 - _lambda) + _cameraStop.position() * _lambda);
+  _camera.orientation(_cameraStart.orientation() * (1 - _lambda) + _cameraStop.orientation() * _lambda);
 }
 
 
