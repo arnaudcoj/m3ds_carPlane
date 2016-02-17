@@ -186,8 +186,14 @@ void GLApplication::updateCamera() {
       break;
     case Camera_Follow_Plane: {
 
+      /*
         _camera.position(_airplane.position()+Vector3(0,1,-3));
         _camera.orientation(180,Vector3(0,1,0));
+      */
+
+      _camera.position(_airplane.position()+ _airplane.orientation() * Vector3(0,1,-3));
+      _camera.orientation(_airplane.orientation());
+      _camera.rotate(180,Vector3(0,1,0));
 
       }
       break;
